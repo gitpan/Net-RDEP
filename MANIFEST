@@ -6,5 +6,6 @@ t/Net-RDEP.t
 t/XML-Idiom.t
 lib/Net/RDEP.pm
 lib/XML/Idiom.pm
-examples/rdep.pl
+examples/rdep-query.pl
+examples/rdep-sub.pl
 META.yml                                 Module meta-data (added by MakeMaker)

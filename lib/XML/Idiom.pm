@@ -14,6 +14,8 @@ use warnings;
 
 use XML::Simple;
 
+our $VERSION = '0.02';
+
 ##########################################################################################
 #
 # Methods to manage the errors
@@ -103,6 +105,8 @@ sub new {
 
         bless( $self, $class );
 	if(defined($document)) { $self->consume($document) }
+
+        $XML::Simple::PREFERRED_PARSER='XML::Parser';
 
         return $self;
 }

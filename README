@@ -1,4 +1,4 @@
-Net-RDEP version 0.01
+Net-RDEP version 0.02
 =====================
 
 This module really consists of two packages, Net::RDEP and XML::Idiom.  The
@@ -27,7 +27,7 @@ Crypt-SSLeay if you want to use SSL in your communication between client/server.
 
 XML::Idiom requires only XML::Simple.
 
-COPYRIGHT AND LICENCE
+COPYRIGHT AND LICENSE
 
 Copyright (C) 2004 by Joe Minieri and OpenService (www.open.com)
 
