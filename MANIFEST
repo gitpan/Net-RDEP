@@ -1,0 +1,10 @@
+Changes
+Makefile.PL
+MANIFEST
+README
+t/Net-RDEP.t
+t/XML-Idiom.t
+lib/Net/RDEP.pm
+lib/XML/Idiom.pm
+examples/rdep.pl
+META.yml                                 Module meta-data (added by MakeMaker)
