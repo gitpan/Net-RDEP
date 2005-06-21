@@ -1,5 +1,7 @@
 # Net::RDEP.pm
 #
+# $Id: RDEP.pm,v 1.1 2004/12/23 12:05:58 jminieri Exp $
+#
 # Copyright (c) 2004 Joe Minieri <jminieri@mindspring.com> and OpenService (www.open.com).
 # All rights reserved.
 # This program is free software; you can redistribute it and/or modify it under the same
@@ -19,7 +21,7 @@ use LWP::UserAgent;
 # names by default without a very good reason. Use EXPORT_OK instead.
 # Do not simply export all your public functions/methods/constants.
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 my %_eventTypes = (
         'evError',              1,
@@ -359,7 +361,9 @@ sub open {
 
 	if ($self->Type eq 'subscription') {
 		$form_parameters{ 'action' } = 'open';
-		$form_parameters{ 'timeout' } = $self->timeout;
+		if (defined($self->timeout)) {
+			$form_parameters{ 'timeout' } = $self->timeout;
+		}
 		if (defined($self->confirm)) {
 			$form_parameters{ 'confirm' } = $self->confirm;
 		}
@@ -421,6 +425,7 @@ sub open {
 		$self->errorString( "Query failed: " . $result->status_line);
 	}
 
+	# on a subscription open, there is no content.  On a query, the content is the events
 	return $result->content;
 }
 
@@ -430,7 +435,11 @@ sub get {
 	$self->error(undef);
 	$self->errorString(undef);
 
-	if( $self->Type eq 'query' or $self->state eq 'closed' ) { return $self->open() }
+	# if we're just doing a query, return the "open";
+	if( $self->Type eq 'query' ) { return $self->open() }
+
+	# if we're doing a subscription, open first, the proceed
+	if( $self->state eq 'closed' ) { $self->open() }
 
 	#
 	# only event subscriptions should be here
@@ -444,6 +453,10 @@ sub get {
 		'action'		=> 'get',
 		'subscriptionId'	=> $self->subscriptionId
 	);
+
+	if (defined($self->timeout)) {
+		$form_parameters{ 'timeout' } = $self->timeout;
+	}
 
 	if (defined($self->confirm)) {
 		$form_parameters{ 'confirm' } = $self->confirm;
@@ -507,7 +520,7 @@ sub close {
 	my $result = $LWP->post($self->_make_uri, \%form_parameters, %headers);
 
 	$self->state('closed');
-	if($result->is_success) {
+	if(defined($result) and $result->is_success) {
 		return $result->content;
 	} else {
 		$self->error(1);

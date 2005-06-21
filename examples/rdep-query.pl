@@ -5,11 +5,10 @@ use Net::RDEP;
 use XML::Idiom;
 use Data::Dumper;
 
-#my $RDEP_HOST='208.221.18.61';
-my $RDEP_HOST='10.1.37.1';
-my $RDEP_USER='open';
-my $RDEP_PASS='op3n=9!';
-my $RDEP_TYPE='subscription';
+my $RDEP_HOST='172.16.3.10';
+my $RDEP_USER='rdep';
+my $RDEP_PASS='rd3p123';
+my $RDEP_TYPE='query';
 
 #
 # Obviously, we'll want to do some *real* event processing here...
